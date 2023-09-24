@@ -5,15 +5,17 @@ main: fox.ryukkun_.hideplayer.main
 commands:
   show:
     permission: hideplayer.commands.show
-
   hide:
     permission: hideplayer.commands.hide
+  hideplayer:
+    permission: hideplayer.commands.hideplayer
 
 permissions:
   hideplayer.*:
     children:
       hideplayer.commands.show: true
       hideplayer.commands.hide: true
+      hideplayer.commands.hideplayer: true
       hideplayer.hide_with_item: true
 
   hideplayer.commands.show:
@@ -21,6 +23,9 @@ permissions:
 
   hideplayer.commands.hide:
     default: true
+
+  hideplayer.commands.hideplayer:
+    default: op
 
   hideplayer.hide_with_item:
     default: true

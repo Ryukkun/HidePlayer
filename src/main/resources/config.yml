@@ -2,3 +2,5 @@ item:
   id: CLOCK
   name: なんかすごい時計
   check_name: false
+
+interval: 0.5

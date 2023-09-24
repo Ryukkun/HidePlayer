@@ -1,6 +1,7 @@
 package fox.ryukkun_.hideplayer;
 
 import fox.ryukkun_.hideplayer.commands.Hide;
+import fox.ryukkun_.hideplayer.commands.HidePlayer;
 import fox.ryukkun_.hideplayer.commands.Show;
 import fox.ryukkun_.hideplayer.events.PlayerJoin;
 import fox.ryukkun_.hideplayer.events.PlayerLeft;
@@ -27,11 +28,17 @@ public final class main extends JavaPlugin {
 
         getCommand("hide").setExecutor(new Hide());
         getCommand("show").setExecutor(new Show());
+        getCommand("hideplayer").setExecutor(new HidePlayer());
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public void reloadConfig() {
+        super.reloadConfig();
+        main.config = getConfig();
     }
 
     public static JavaPlugin getPlugin(){
