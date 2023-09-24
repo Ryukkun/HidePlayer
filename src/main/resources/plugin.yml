@@ -1,0 +1,26 @@
+name: HidePlayer
+version: '${project.version}'
+main: fox.ryukkun_.hideplayer.main
+
+commands:
+  show:
+    permission: hideplayer.commands.show
+
+  hide:
+    permission: hideplayer.commands.hide
+
+permissions:
+  hideplayer.*:
+    children:
+      hideplayer.commands.show: true
+      hideplayer.commands.hide: true
+      hideplayer.hide_with_item: true
+
+  hideplayer.commands.show:
+    default: true
+
+  hideplayer.commands.hide:
+    default: true
+
+  hideplayer.hide_with_item:
+    default: true
