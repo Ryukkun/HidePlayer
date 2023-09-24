@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class UsedItem implements Listener {
     @EventHandler
@@ -23,6 +24,8 @@ public class UsedItem implements Listener {
         if (item == null) return;
         if (!item.getType().equals(material)) return;
         if (config.getBoolean("item.check_name")){
+            ItemMeta im = item.getItemMeta();
+            if (!im.hasDisplayName()) return;
             if (!item.getItemMeta().getDisplayName().equals( config.getString("item.name"))) return;
         }
 
