@@ -12,13 +12,17 @@ public class ControlVisibility {
     public static void hide(Player player) {
         UUID uuid = player.getUniqueId();
         if (isHidingPlayer(uuid)) {
-            MCLogger.sendMessage(player, MCLogger.Level.Warning, "already hidden the player =)");
+            MCLogger.sendMessage(player, MCLogger.Level.Warning, "already hidden all players =)");
             return;
         }
 
         if (!setEnable(uuid, true)) {
             intervalMessage(player);
             return;
+        }
+        String message = main.getFileConfig().getString("message.hide");
+        if (!message.isEmpty()) {
+            MCLogger.sendMessage(player, MCLogger.Level.Success, message);
         }
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (onlinePlayer.getUniqueId() == uuid) continue;
@@ -30,13 +34,17 @@ public class ControlVisibility {
     public static void show(Player player) {
         UUID uuid = player.getUniqueId();
         if (!isHidingPlayer(uuid)) {
-            MCLogger.sendMessage(player, MCLogger.Level.Warning, "already shown the player =)");
+            MCLogger.sendMessage(player, MCLogger.Level.Warning, "already shown all players =)");
             return;
         }
 
         if (!setEnable(uuid, false)) {
             intervalMessage(player);
             return;
+        }
+        String message = main.getFileConfig().getString("message.show");
+        if (!message.isEmpty()) {
+            MCLogger.sendMessage(player, MCLogger.Level.Success, message);
         }
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (onlinePlayer.getUniqueId() == uuid) continue;

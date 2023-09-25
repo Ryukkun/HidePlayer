@@ -1,6 +1,28 @@
 item:
-  id: WATCH
-  name: なんかすごい時計
-  check_name: false
+  # hide/showを切り替える際 アイテムも入れ替えるか設定できます。
+  # falseの場合は hideのアイテムで show/hideを切り替えられます。
+  change_item: false
+  hide:
+    id: WATCH
+    name: なんかすごい時計
+    lore:
+
+  show:
+    id: COMPASS
+    name: なんかすごいコンパス
+    lore:
+
 
 interval: 0.5
+
+message:
+  prefix:
+    success: §2H§aide§2P§alayer §2>> §a
+    warning: §6H§eide§6P§elayer §6>> §e
+    error: §4H§cide§4P§clayer §4>> §c
+  hide: §r§2§bhid §r§aall players
+  show: §r§7§bshowed §r§aall players
+
+厨二message:
+  hide: お前以外の人間を抹消した☨
+  show: 全ての命の灯が点く☨

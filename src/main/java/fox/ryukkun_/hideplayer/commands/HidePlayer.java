@@ -16,14 +16,67 @@ public class HidePlayer extends SubCommandTPL{
         subCommands.put("set-itemId", new SetItemId());
         subCommands.put("check-name", new CheckName());
         subCommands.put("set-name", new SetName());
+        subCommands.put("set-message", new SetMessage());
     }
+
+    private static class SetMessage extends SubCommandTPL {
+        public SetMessage() {
+            subCommands.put("hide", new HideMessage());
+            subCommands.put("show", new ShowMessage());
+        }
+
+        private static class HideMessage implements CMD {
+            @Override
+            public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+                String id = "message.hide";
+                String arg;
+                if (0 == args.length) arg = "";
+                else arg = args[0];
+                main.getFileConfig().set(id, args[0]);
+                main.getPlugin().saveConfig();
+                MCLogger.sendMessage(sender, MCLogger.Level.Success, id+"を \""+args[0]+"\" に設定しました。");
+                return true;
+            }
+
+            @Override
+            public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+                return null;
+            }
+        }
+
+        private static class ShowMessage implements CMD {
+            @Override
+            public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+                String id = "message.show";
+                if (0 == args.length) {
+                    MCLogger.sendMessage(sender, MCLogger.Level.Success, id+"は \""+main.getFileConfig().get(id)+"\" です。");
+                    return true;
+                }
+                main.getFileConfig().set(id, args[0]);
+                main.getPlugin().saveConfig();
+                MCLogger.sendMessage(sender, MCLogger.Level.Success, id+"を \""+args[0]+"\" に設定しました。");
+                return true;
+            }
+
+            @Override
+            public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+                return null;
+            }
+        }
+    }
+
 
     private static class SetName implements CMD {
         @Override
         public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            main.getFileConfig().set("item.name", args[0]);
+            String id = "item.name";
+            if (0 == args.length) {
+                MCLogger.sendMessage(sender, MCLogger.Level.Success, id+"は \""+main.getFileConfig().get(id)+"\" です。");
+                return true;
+            }
+            main.getFileConfig().set(id, args[0]);
             main.getPlugin().saveConfig();
-            MCLogger.sendMessage(sender, MCLogger.Level.Success, "item.nameを \""+args[0]+"\" に設定しました。");
+            MCLogger.sendMessage(sender, MCLogger.Level.Success, id+"を \""+args[0]+"\" に設定しました。");
             return true;
         }
 
