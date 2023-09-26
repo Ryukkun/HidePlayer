@@ -26,8 +26,8 @@ public class HideItemUtil {
         }
     }
     public static void toHideItem(ItemStack is) {
-        ItemMeta im = is.getItemMeta();
         is.setType(Config.getMaterial(Config.PATH.item_hide_id));
+        ItemMeta im = is.getItemMeta();
         im.setDisplayName(Config.getString(Config.PATH.item_hide_name, ""));
         im.setLore(Arrays.asList(Config.getString(Config.PATH.item_hide_lore, "").split("\n")));
         is.setItemMeta(im);
@@ -42,8 +42,8 @@ public class HideItemUtil {
         }
     }
     public static void toShowItem(ItemStack is) {
-        ItemMeta im = is.getItemMeta();
         is.setType(Config.getMaterial(Config.PATH.item_show_id));
+        ItemMeta im = is.getItemMeta();
         im.setDisplayName(Config.getString(Config.PATH.item_show_name, ""));
         im.setLore(Arrays.asList(Config.getString(Config.PATH.item_show_lore, "").split("\n")));
         is.setItemMeta(im);

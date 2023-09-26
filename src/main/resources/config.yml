@@ -19,7 +19,7 @@ item:
 interval: 0.5
 
 message:
-  # メッセージの最初についてるやつ
+  # 接頭辞。メッセージの最初についてるやつ
   prefix:
     success: §2H§aide§2P§alayer §2>> §a
     warning: §6H§eide§6P§elayer §6>> §e
