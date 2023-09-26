@@ -18,3 +18,43 @@
 - `/hideplayer set-interval <double>` : show/hide を切り替える際のインターバルを指定。単位は秒。初期設定は0.5。
 - `/hideplayer set-message ...` : メッセージを設定。
 - `/hideplayer get <String path>` : configの取得。
+
+## > Config
+```
+item:
+  # hide/showを切り替える際 アイテムも入れ替えるか設定できます。  
+  # falseの場合は hide/showどちらののアイテムでも show/hideを切り替えられます。  
+  change_item: false  
+  
+  ## アイテムの判別にnameとidを用います。
+  ## nameが空白の場合は デフォルトの名前（時計なら”時計”） で反応します。
+  hide:
+    id: WATCH
+    name: なんかすごい時計
+    lore: ''
+
+  show:
+    id: COMPASS
+    name: なんかすごいコンパス
+    lore: ''
+
+## 単位は秒。 0.0でもいいよん
+interval: 0.5
+
+message:
+  # 接頭辞。メッセージの最初についてるやつ
+  prefix:
+    success: §2H§aide§2P§alayer §2>> §a
+    warning: §6H§eide§6P§elayer §6>> §e
+    error: §4H§cide§4P§clayer §4>> §c
+
+  # プレイヤーを消すときのメッセージ
+  hide: §r§2§lhid §r§aall players
+  show: §r§2§lshowed §r§aall players
+
+  already_hide: already hidden all players =)
+  already_show: already shown all players =)
+
+  # intervalは `%s` で参照できます。
+  interval: please wait %s seconds ...
+```
