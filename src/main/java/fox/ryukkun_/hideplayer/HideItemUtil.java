@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class HideItemUtil {
     public static boolean equalsItem(ItemStack is, Material material, String name) {
+        if (name == null) name = "";
         if (is == null) return false;
         if (!is.getType().equals(material)) return false;
         ItemMeta im = is.getItemMeta();
@@ -27,8 +28,8 @@ public class HideItemUtil {
     public static void toHideItem(ItemStack is) {
         ItemMeta im = is.getItemMeta();
         is.setType(Config.getMaterial(Config.PATH.item_hide_id));
-        im.setDisplayName(Config.getString(Config.PATH.item_hide_name));
-        im.setLore(Arrays.asList(Config.getString(Config.PATH.item_hide_lure, "").split("\n")));
+        im.setDisplayName(Config.getString(Config.PATH.item_hide_name, ""));
+        im.setLore(Arrays.asList(Config.getString(Config.PATH.item_hide_lore, "").split("\n")));
         is.setItemMeta(im);
     }
 
@@ -43,8 +44,8 @@ public class HideItemUtil {
     public static void toShowItem(ItemStack is) {
         ItemMeta im = is.getItemMeta();
         is.setType(Config.getMaterial(Config.PATH.item_show_id));
-        im.setDisplayName(Config.getString(Config.PATH.item_show_name));
-        im.setLore(Arrays.asList(Config.getString(Config.PATH.item_show_lure, "").split("\n")));
+        im.setDisplayName(Config.getString(Config.PATH.item_show_name, ""));
+        im.setLore(Arrays.asList(Config.getString(Config.PATH.item_show_lore, "").split("\n")));
         is.setItemMeta(im);
     }
 }

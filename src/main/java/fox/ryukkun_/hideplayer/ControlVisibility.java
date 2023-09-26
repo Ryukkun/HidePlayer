@@ -12,7 +12,8 @@ public class ControlVisibility {
     public static void hide(Player player, ItemStack is) {
         UUID uuid = player.getUniqueId();
         if (isHidingPlayer(uuid)) {
-            MCLogger.sendMessage(player, MCLogger.Level.Warning, "already hidden all players =)");
+            String message = Config.getString(Config.PATH.message_alreadyHide, "");
+            if (!message.isEmpty()) MCLogger.sendMessage(player, MCLogger.Level.Warning, message);
             return;
         }
 
@@ -38,7 +39,8 @@ public class ControlVisibility {
     public static void show(Player player, ItemStack is) {
         UUID uuid = player.getUniqueId();
         if (!isHidingPlayer(uuid)) {
-            MCLogger.sendMessage(player, MCLogger.Level.Warning, "already shown all players =)");
+            String message = Config.getString(Config.PATH.message_alreadyShow, "");
+            if (!message.isEmpty()) MCLogger.sendMessage(player, MCLogger.Level.Warning, message);
             return;
         }
 
@@ -98,7 +100,7 @@ public class ControlVisibility {
 
 
     private static void intervalMessage(Player player) {
-        MCLogger.sendMessage(player, MCLogger.Level.Warning, "Please wait "+Config.getDouble(Config.PATH.interval)+" seconds.");
+        MCLogger.sendMessage(player, MCLogger.Level.Warning, String.format(Config.getString(Config.PATH.message_interval), Config.getDouble(Config.PATH.interval)));
     }
 
 

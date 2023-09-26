@@ -2,6 +2,7 @@ package fox.ryukkun_.hideplayer.commands;
 
 import fox.ryukkun_.hideplayer.Config;
 import fox.ryukkun_.hideplayer.MCLogger;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,17 +12,17 @@ import java.util.List;
 
 public class HidePlayer extends SubCommandTPL{
     public HidePlayer() {
-        subCommands.put("reload", new Reload());
+        subCommands.put("reload_config", new Reload());
         subCommands.put("set-interval", new SetInterval());
         subCommands.put("set-item", new SetItem());
         subCommands.put("set-message", new SetMessage());
     }
 
     private static void configSet(CommandSender sender, Config.PATH path, String[] args) {
-        configSet(sender, path, (0 == args.length) ? "" : args[0]);
+        configSet(sender, path, (0 == args.length) ? "" : String.join(" ", args));
     }
     private static void configSet(CommandSender sender, Config.PATH path, String arg) {
-        Config.set(path, arg);
+        Config.set(path, ChatColor.translateAlternateColorCodes('&', arg));
         registered(sender, path, arg);
     }
     private static void configSet(CommandSender sender, Config.PATH path, double arg) {
@@ -40,8 +41,8 @@ public class HidePlayer extends SubCommandTPL{
     private static class SetItem extends SubCommandTPL {
         public SetItem() {
             subCommands.put("change_item", new ChangeItem());
-            subCommands.put("hide", new SetItemTPL(Config.PATH.item_hide_id, Config.PATH.item_hide_name, Config.PATH.item_hide_lure));
-            subCommands.put("show", new SetItemTPL(Config.PATH.item_show_id, Config.PATH.item_show_name, Config.PATH.item_show_lure));
+            subCommands.put("hide", new SetItemTPL(Config.PATH.item_hide_id, Config.PATH.item_hide_name, Config.PATH.item_hide_lore));
+            subCommands.put("show", new SetItemTPL(Config.PATH.item_show_id, Config.PATH.item_show_name, Config.PATH.item_show_lore));
         }
 
         private static class ChangeItem implements CMD {
@@ -75,10 +76,10 @@ public class HidePlayer extends SubCommandTPL{
         }
 
         private static class SetItemTPL extends SubCommandTPL {
-            public SetItemTPL(Config.PATH id, Config.PATH name, Config.PATH lour) {
+            public SetItemTPL(Config.PATH id, Config.PATH name, Config.PATH lore) {
                 subCommands.put("id", new SetId(id));
                 subCommands.put("name", new SetStringTPL(name));
-                subCommands.put("lour", new SetStringTPL(lour));
+                subCommands.put("lore", new SetStringTPL(lore));
             }
 
             private static class SetId implements CMD {
@@ -130,6 +131,9 @@ public class HidePlayer extends SubCommandTPL{
         public SetMessage() {
             subCommands.put("hide", new SetStringTPL(Config.PATH.message_hide));
             subCommands.put("show", new SetStringTPL(Config.PATH.message_show));
+            subCommands.put("already-hide", new SetStringTPL(Config.PATH.message_alreadyHide));
+            subCommands.put("already-show", new SetStringTPL(Config.PATH.message_alreadyShow));
+            subCommands.put("interval", new SetStringTPL(Config.PATH.message_interval));
             subCommands.put("prefix", new Prefix());
         }
 

@@ -32,7 +32,12 @@ public class Config {
         return config.getDouble(path.getPath());
     }
     public static String getString(PATH path, String Default) {
-        return config.getString(path.getPath(), Default);
+        String res = config.getString(path.getPath());
+        if (res == null) {
+            set(path, Default);
+            res = Default;
+        }
+        return res;
     }
     public static String getString(PATH path) {
         return config.getString(path.getPath());
@@ -46,13 +51,16 @@ public class Config {
         change_item("item.change_item"),
         item_hide_id("item.hide.id"),
         item_hide_name("item.hide.name"),
-        item_hide_lure("item.hide.lure"),
+        item_hide_lore("item.hide.lore"),
         item_show_id("item.show.id"),
         item_show_name("item.show.name"),
-        item_show_lure("item.show.lure"),
+        item_show_lore("item.show.lore"),
         interval("interval"),
         message_hide("message.hide"),
         message_show("message.show"),
+        message_alreadyHide("message.already_hide"),
+        message_alreadyShow("message.already_show"),
+        message_interval("message.interval"),
         prefix_success("message.prefix.success"),
         prefix_warning("message.prefix.warning"),
         prefix_error("message.prefix.error");

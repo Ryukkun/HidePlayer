@@ -30,8 +30,8 @@ public class UsedItem implements Listener {
 
         ItemStack item = event.getItem();
         boolean isHiding = ControlVisibility.isHidingPlayer(player);
-        String hideName = Config.getString(Config.PATH.item_hide_name);
-        String showName = Config.getString(Config.PATH.item_show_name);
+        String hideName = Config.getString(Config.PATH.item_hide_name, "");
+        String showName = Config.getString(Config.PATH.item_show_name, "");
 
         if (!HideItemUtil.equalsItem(item, hideMaterial, hideName) && !HideItemUtil.equalsItem(item, showMaterial, showName)) return;
 
