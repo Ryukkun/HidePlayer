@@ -16,6 +16,7 @@ public class HidePlayer extends SubCommandTPL{
         subCommands.put("set-interval", new SetInterval());
         subCommands.put("set-item", new SetItem());
         subCommands.put("set-message", new SetMessage());
+        subCommands.put("get", new Get());
     }
 
     private static void configSet(CommandSender sender, Config.PATH path, String[] args) {
@@ -35,6 +36,31 @@ public class HidePlayer extends SubCommandTPL{
     }
     private static void registered(CommandSender sender, Config.PATH path, String arg) {
         MCLogger.sendMessage(sender, MCLogger.Level.Success, path.getPath()+"を \""+arg+"\" に設定しました。");
+    }
+
+
+    private static class Get implements CMD {
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+            String arg = args.length == 0 ? "" : String.join(" ", args);
+            MCLogger.sendMessage(sender, MCLogger.Level.Success, arg+" の値は \"§r"+Config.config.getString(arg)+"§r\" です。");
+            return true;
+        }
+
+        @Override
+        public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+            if (args.length == 1) {
+                String prefix = args[0];
+                List<String> tabList = new ArrayList<>();
+                for (String key : Config.config.getKeys(true)) {
+                    if (prefix.isEmpty() || key.startsWith(prefix)) {
+                        tabList.add(key);
+                    }
+                }
+                return tabList;
+            }
+            return null;
+        }
     }
 
 
