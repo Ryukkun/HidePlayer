@@ -1,7 +1,7 @@
 package fox.ryukkun_.hideplayer.commands;
 
+import fox.ryukkun_.hideplayer.Config;
 import fox.ryukkun_.hideplayer.MCLogger;
-import fox.ryukkun_.hideplayer.main;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,21 +17,31 @@ public class HidePlayer extends SubCommandTPL{
         subCommands.put("set-message", new SetMessage());
     }
 
-    private static void configSet(CommandSender sender, String path, String[] args) {
+    private static void configSet(CommandSender sender, Config.PATH path, String[] args) {
         configSet(sender, path, (0 == args.length) ? "" : args[0]);
     }
-    private static void configSet(CommandSender sender, String path, String arg) {
-        main.getFileConfig().set(path, arg);
-        main.getPlugin().saveConfig();
-        MCLogger.sendMessage(sender, MCLogger.Level.Success, path+"を \""+arg+"\" に設定しました。");
+    private static void configSet(CommandSender sender, Config.PATH path, String arg) {
+        Config.set(path, arg);
+        registered(sender, path, arg);
+    }
+    private static void configSet(CommandSender sender, Config.PATH path, double arg) {
+        Config.set(path, arg);
+        registered(sender, path, String.valueOf(arg));
+    }
+    private static void configSet(CommandSender sender, Config.PATH path, boolean arg) {
+        Config.set(path, arg);
+        registered(sender, path, String.valueOf(arg));
+    }
+    private static void registered(CommandSender sender, Config.PATH path, String arg) {
+        MCLogger.sendMessage(sender, MCLogger.Level.Success, path.getPath()+"を \""+arg+"\" に設定しました。");
     }
 
 
     private static class SetItem extends SubCommandTPL {
         public SetItem() {
             subCommands.put("change_item", new ChangeItem());
-            subCommands.put("hide", new SetItemTPL("hide"));
-            subCommands.put("show", new SetItemTPL("show"));
+            subCommands.put("hide", new SetItemTPL(Config.PATH.item_hide_id, Config.PATH.item_hide_name, Config.PATH.item_hide_lure));
+            subCommands.put("show", new SetItemTPL(Config.PATH.item_show_id, Config.PATH.item_show_name, Config.PATH.item_show_lure));
         }
 
         private static class ChangeItem implements CMD {
@@ -48,7 +58,7 @@ public class HidePlayer extends SubCommandTPL{
                     return true;
                 }
 
-                configSet(sender, "item.change_item", Boolean.toString(res));
+                configSet(sender, Config.PATH.change_item, res);
                 return true;
             }
 
@@ -65,17 +75,15 @@ public class HidePlayer extends SubCommandTPL{
         }
 
         private static class SetItemTPL extends SubCommandTPL {
-            public SetItemTPL(String path) {
-                path = "item."+path+".";
-
-                subCommands.put("id", new SetId(path+"id"));
-                subCommands.put("name", new SetStringTPL(path+"name"));
-                subCommands.put("lour", new SetStringTPL(path+"lour"));
+            public SetItemTPL(Config.PATH id, Config.PATH name, Config.PATH lour) {
+                subCommands.put("id", new SetId(id));
+                subCommands.put("name", new SetStringTPL(name));
+                subCommands.put("lour", new SetStringTPL(lour));
             }
 
             private static class SetId implements CMD {
-                private final String path;
-                public SetId(String path) {
+                private final Config.PATH path;
+                public SetId(Config.PATH path) {
                     this.path = path;
                 }
                 @Override
@@ -120,26 +128,25 @@ public class HidePlayer extends SubCommandTPL{
 
     private static class SetMessage extends SubCommandTPL {
         public SetMessage() {
-            subCommands.put("hide", new SetStringTPL("message.hide"));
-            subCommands.put("show", new SetStringTPL("message.show"));
+            subCommands.put("hide", new SetStringTPL(Config.PATH.message_hide));
+            subCommands.put("show", new SetStringTPL(Config.PATH.message_show));
             subCommands.put("prefix", new Prefix());
         }
 
 
         private static class Prefix extends SubCommandTPL {
             public Prefix() {
-                String path = "message.prefix.";
-                subCommands.put("success", new SetStringTPL(path+"success"));
-                subCommands.put("warning", new SetStringTPL(path+"warning"));
-                subCommands.put("error", new SetStringTPL(path+"error"));
+                subCommands.put("success", new SetStringTPL(Config.PATH.prefix_success));
+                subCommands.put("warning", new SetStringTPL(Config.PATH.prefix_warning));
+                subCommands.put("error", new SetStringTPL(Config.PATH.prefix_error));
             }
         }
     }
 
 
     private static class SetStringTPL implements CMD {
-        private final String path;
-        public SetStringTPL(String path) {
+        private final Config.PATH path;
+        public SetStringTPL(Config.PATH path) {
             this.path = path;
         }
         @Override
@@ -172,7 +179,7 @@ public class HidePlayer extends SubCommandTPL{
                 MCLogger.sendMessage(sender, MCLogger.Level.Error, "少数を入力してください。");
                 return true;
             }
-            configSet(sender, "interval", Double.toString(arg));
+            configSet(sender, Config.PATH.interval, arg);
             return true;
         }
 
@@ -186,7 +193,7 @@ public class HidePlayer extends SubCommandTPL{
     private static class Reload implements CMD{
         @Override
         public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            main.getPlugin().reloadConfig();
+            Config.reload();
             MCLogger.sendMessage(sender, MCLogger.Level.Success, "configを再読み込みしました。");
             return true;
         }

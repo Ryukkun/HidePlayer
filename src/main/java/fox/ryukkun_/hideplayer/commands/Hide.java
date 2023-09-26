@@ -15,7 +15,7 @@ public class Hide implements CommandExecutor{
             return true;
         }
 
-        ControlVisibility.hide((Player) sender);
+        ControlVisibility.hide((Player) sender, null);
         return true;
     }
 }

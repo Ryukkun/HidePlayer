@@ -15,7 +15,7 @@ public class Show implements CommandExecutor{
             return true;
         }
 
-        ControlVisibility.show((Player) sender);
+        ControlVisibility.show((Player) sender, null);
         return true;
     }
 }

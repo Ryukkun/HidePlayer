@@ -2,14 +2,14 @@ package fox.ryukkun_.hideplayer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
 public class ControlVisibility {
     private static final HashMap<UUID, HidingPlayer> hidePlayer = new HashMap<>();
 
-
-    public static void hide(Player player) {
+    public static void hide(Player player, ItemStack is) {
         UUID uuid = player.getUniqueId();
         if (isHidingPlayer(uuid)) {
             MCLogger.sendMessage(player, MCLogger.Level.Warning, "already hidden all players =)");
@@ -20,7 +20,7 @@ public class ControlVisibility {
             intervalMessage(player);
             return;
         }
-        String message = main.getFileConfig().getString("message.hide");
+        String message = Config.getString(Config.PATH.message_hide);
         if (!message.isEmpty()) {
             MCLogger.sendMessage(player, MCLogger.Level.Success, message);
         }
@@ -29,9 +29,13 @@ public class ControlVisibility {
             player.hidePlayer(main.getPlugin(), onlinePlayer);
         }
 
+        if (Config.getBoolean(Config.PATH.change_item)) {
+            if (is == null) HideItemUtil.toShowItem(player.getInventory());
+            else HideItemUtil.toShowItem(is);
+        }
     }
 
-    public static void show(Player player) {
+    public static void show(Player player, ItemStack is) {
         UUID uuid = player.getUniqueId();
         if (!isHidingPlayer(uuid)) {
             MCLogger.sendMessage(player, MCLogger.Level.Warning, "already shown all players =)");
@@ -42,13 +46,18 @@ public class ControlVisibility {
             intervalMessage(player);
             return;
         }
-        String message = main.getFileConfig().getString("message.show");
+        String message = Config.getString(Config.PATH.message_show);
         if (!message.isEmpty()) {
             MCLogger.sendMessage(player, MCLogger.Level.Success, message);
         }
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (onlinePlayer.getUniqueId() == uuid) continue;
             player.showPlayer(main.getPlugin(), onlinePlayer);
+        }
+
+        if (Config.getBoolean(Config.PATH.change_item)) {
+            if (is == null) HideItemUtil.toHideItem(player.getInventory());
+            else HideItemUtil.toHideItem(is);
         }
     }
 
@@ -89,7 +98,7 @@ public class ControlVisibility {
 
 
     private static void intervalMessage(Player player) {
-        MCLogger.sendMessage(player, MCLogger.Level.Warning, "Please wait "+main.getFileConfig().getDouble("interval")+" seconds.");
+        MCLogger.sendMessage(player, MCLogger.Level.Warning, "Please wait "+Config.getDouble(Config.PATH.interval)+" seconds.");
     }
 
 
@@ -125,7 +134,7 @@ public class ControlVisibility {
         }
 
         public boolean canAction() {
-            return main.getFileConfig().getDouble("interval")*1000 <= System.currentTimeMillis()-lastActionTime;
+            return Config.getDouble(Config.PATH.interval)*1000 <= System.currentTimeMillis()-lastActionTime;
         }
     }
 }
