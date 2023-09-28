@@ -100,8 +100,7 @@ public class ControlVisibility {
 
 
     private static void intervalMessage(Player player) {
-        String message = Config.getString(Config.PATH.message_interval);
-        if (!message.isEmpty()) MCLogger.sendMessage(player, MCLogger.Level.Warning, String.format(message, Config.getDouble(Config.PATH.interval)));
+        MCLogger.sendMessage(player, MCLogger.Level.Warning, String.format(Config.getString(Config.PATH.message_interval), Config.getDouble(Config.PATH.interval)));
     }
 
 
