@@ -16,6 +16,8 @@ public final class main extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         main.plugin = this;
         Config.setConfig();
 

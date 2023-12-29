@@ -13,7 +13,7 @@ public class ControlVisibility {
         UUID uuid = player.getUniqueId();
         if (isHidingPlayer(uuid)) {
             String message = Config.getString(Config.PATH.message_alreadyHide, "");
-            if (!message.isEmpty()) MCLogger.sendMessage(player, MCLogger.Level.Warning, message);
+            MCLogger.sendMessage(player, MCLogger.Level.Warning, message);
             return;
         }
 
@@ -22,9 +22,8 @@ public class ControlVisibility {
             return;
         }
         String message = Config.getString(Config.PATH.message_hide);
-        if (!message.isEmpty()) {
-            MCLogger.sendMessage(player, MCLogger.Level.Success, message);
-        }
+        MCLogger.sendMessage(player, MCLogger.Level.Success, message);
+
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (onlinePlayer.getUniqueId() == uuid) continue;
             player.hidePlayer(main.getPlugin(), onlinePlayer);
@@ -40,7 +39,7 @@ public class ControlVisibility {
         UUID uuid = player.getUniqueId();
         if (!isHidingPlayer(uuid)) {
             String message = Config.getString(Config.PATH.message_alreadyShow, "");
-            if (!message.isEmpty()) MCLogger.sendMessage(player, MCLogger.Level.Warning, message);
+            MCLogger.sendMessage(player, MCLogger.Level.Warning, message);
             return;
         }
 
@@ -49,9 +48,8 @@ public class ControlVisibility {
             return;
         }
         String message = Config.getString(Config.PATH.message_show);
-        if (!message.isEmpty()) {
-            MCLogger.sendMessage(player, MCLogger.Level.Success, message);
-        }
+        MCLogger.sendMessage(player, MCLogger.Level.Success, message);
+
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (onlinePlayer.getUniqueId() == uuid) continue;
             player.showPlayer(main.getPlugin(), onlinePlayer);
@@ -101,7 +99,7 @@ public class ControlVisibility {
 
     private static void intervalMessage(Player player) {
         String message = Config.getString(Config.PATH.message_interval);
-        if (!message.isEmpty()) MCLogger.sendMessage(player, MCLogger.Level.Warning, String.format(message, Config.getDouble(Config.PATH.interval)));
+        MCLogger.sendMessage(player, MCLogger.Level.Warning, String.format(message, Config.getDouble(Config.PATH.interval)));
     }
 
 

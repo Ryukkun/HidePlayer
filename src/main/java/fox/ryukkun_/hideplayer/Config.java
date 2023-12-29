@@ -12,6 +12,7 @@ public class Config {
     public static void reload() {
         main.getPlugin().reloadConfig();
         setConfig();
+        main.getPlugin().saveConfig();
     }
 
     public static void set(PATH path, Object value) {
@@ -40,7 +41,7 @@ public class Config {
         return res;
     }
     public static String getString(PATH path) {
-        return config.getString(path.getPath());
+        return Config.getString(path, "");
     }
     public static Material getMaterial(PATH path) {
         return Material.matchMaterial(config.getString(path.getPath()));
@@ -48,31 +49,59 @@ public class Config {
 
 
     public enum PATH {
-        change_item("item.change_item"),
-        item_hide_id("item.hide.id"),
-        item_hide_name("item.hide.name"),
-        item_hide_lore("item.hide.lore"),
-        item_show_id("item.show.id"),
-        item_show_name("item.show.name"),
-        item_show_lore("item.show.lore"),
-        interval("interval"),
-        message_hide("message.hide"),
-        message_show("message.show"),
-        message_alreadyHide("message.already_hide"),
-        message_alreadyShow("message.already_show"),
-        message_interval("message.interval"),
-        prefix_success("message.prefix.success"),
-        prefix_warning("message.prefix.warning"),
-        prefix_error("message.prefix.error");
+        change_item("item.change_item", TYPE.Boolean),
+        item_hide_id("item.hide.id", TYPE.Material),
+        item_hide_name("item.hide.name", TYPE.String),
+        item_hide_lore("item.hide.lore", TYPE.String),
+        item_show_id("item.show.id", TYPE.Material),
+        item_show_name("item.show.name", TYPE.String),
+        item_show_lore("item.show.lore", TYPE.String),
+        interval("interval", TYPE.Double),
+        give_item("give_item", TYPE.Boolean),
+        message_hide("message.hide", TYPE.String),
+        message_show("message.show", TYPE.String),
+        message_alreadyHide("message.already_hide", TYPE.String),
+        message_alreadyShow("message.already_show", TYPE.String),
+        message_interval("message.interval", TYPE.String),
+        prefix_success("message.prefix.success", TYPE.String),
+        prefix_warning("message.prefix.warning", TYPE.String),
+        prefix_error("message.prefix.error", TYPE.String);
 
 
         private final String path;
-        PATH(String path) {
+        private final TYPE type;
+        PATH(String path, TYPE type) {
             this.path = path;
+            this.type = type;
         }
 
         public String getPath() {
             return path;
         }
+
+        public TYPE getType() {
+            return type;
+        }
+
+        public static PATH getValue(String text) {
+            for (PATH p : PATH.values()) {
+                if (p.getPath().trim().equals(text)) return p;
+            }
+            return null;
+        }
+
+        public static boolean isExist(String text) {
+            for (PATH p : PATH.values()) {
+                if (p.getPath().trim().equals(text)) return true;
+            }
+            return false;
+        }
+    }
+
+    public enum TYPE {
+        String,
+        Boolean,
+        Double,
+        Material;
     }
 }

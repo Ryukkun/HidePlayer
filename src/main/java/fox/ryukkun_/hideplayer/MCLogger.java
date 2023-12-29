@@ -10,11 +10,15 @@ public class MCLogger {
 
 
     public static void sendMessage(Player player, Level level, String text) {
-        player.sendMessage( getMessage( text, level));
+        if (!text.isEmpty()) {
+            player.sendMessage( getMessage( text, level));
+        }
     }
 
     public static void sendMessage(CommandSender sender, Level level ,String text) {
-        sender.sendMessage( getMessage( text, level));
+        if (!text.isEmpty()) {
+            sender.sendMessage( getMessage( text, level));
+        }
     }
 
     public static void syncSendMessage(CommandSender sender, Level level ,String text) {
