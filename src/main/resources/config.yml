@@ -24,6 +24,7 @@ interval: 0.5
 give_item: true
 
 
+## 空欄にすればメッセージは送信されません。
 message:
   # 接頭辞。メッセージの最初についてるやつ
   prefix:
@@ -40,10 +41,3 @@ message:
 
   # intervalは `%s` で参照できます。
   interval: please wait %s seconds ...
-
-
-
-
-厨二message:
-  hide: お前以外の人間を抹消した☨
-  show: 全ての命の灯が点く☨
