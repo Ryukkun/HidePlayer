@@ -89,19 +89,12 @@ public class Config {
             }
             return null;
         }
-
-        public static boolean isExist(String text) {
-            for (PATH p : PATH.values()) {
-                if (p.getPath().trim().equals(text)) return true;
-            }
-            return false;
-        }
     }
 
     public enum TYPE {
         String,
         Boolean,
         Double,
-        Material;
+        Material
     }
 }
