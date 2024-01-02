@@ -13,6 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+
 public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -47,6 +49,8 @@ public class PlayerJoin implements Listener {
             public ItemStack run() {
                 ItemMeta im = this.getItemMeta();
                 im.setDisplayName(hideName);
+                im.setLore( Arrays.asList(Config.getString(Config.PATH.item_hide_lore, "").split("\n")));
+                this.setItemMeta(im);
                 return this;
             }
         }.run());
