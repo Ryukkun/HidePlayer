@@ -8,7 +8,9 @@
 ## > 機能
 - アイテム右クリックで show/hide を切り替えることができます。
   - 初期設定では 時計に"なんかすごい時計"と、名前を付けたら使用できます。
+  - 額縁やチェストなどの干渉は無効化されています
   - configや変更方法は後述。
+- サーバー参加時にアイテムを持ってないプレイヤーにアイテムを配る (初期設定 true)
  
 https://github.com/Ryukkun/HidePlayer/assets/83561145/e0a78708-6489-4253-b5fd-5a62d76c10d9
     
@@ -70,4 +72,7 @@ message:
 
   # intervalは `%s` で参照できます。
   interval: please wait %s seconds ...
+
+  # チェストとかにアイテム入れようとしたときに表示されるメッセージ (adventureのみ)
+  inventory_change: please move items in your inventory (press E)
 ```
