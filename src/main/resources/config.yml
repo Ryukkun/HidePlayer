@@ -41,3 +41,6 @@ message:
 
   # intervalは `%s` で参照できます。
   interval: please wait %s seconds ...
+
+  # チェストとかにアイテム入れようとしたときに表示されるメッセージ (adventureのみ)
+  inventory_change: please move items in your inventory (press E)

@@ -65,7 +65,8 @@ public class Config {
         message_interval("message.interval", TYPE.String),
         prefix_success("message.prefix.success", TYPE.String),
         prefix_warning("message.prefix.warning", TYPE.String),
-        prefix_error("message.prefix.error", TYPE.String);
+        prefix_error("message.prefix.error", TYPE.String),
+        inventory_change("message.inventory_change", TYPE.String);
 
 
         private final String path;

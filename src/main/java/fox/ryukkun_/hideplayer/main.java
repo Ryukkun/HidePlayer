@@ -3,9 +3,7 @@ package fox.ryukkun_.hideplayer;
 import fox.ryukkun_.hideplayer.commands.Hide;
 import fox.ryukkun_.hideplayer.commands.HidePlayer;
 import fox.ryukkun_.hideplayer.commands.Show;
-import fox.ryukkun_.hideplayer.events.PlayerJoin;
-import fox.ryukkun_.hideplayer.events.PlayerLeft;
-import fox.ryukkun_.hideplayer.events.UsedItem;
+import fox.ryukkun_.hideplayer.events.*;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,6 +20,9 @@ public final class main extends JavaPlugin {
         Config.setConfig();
 
         PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new InventoryMoveItem(), this);
+        pluginManager.registerEvents(new InteractItemFrame(), this);
+        pluginManager.registerEvents(new DropItem(), this);
         pluginManager.registerEvents(new PlayerJoin(), this);
         pluginManager.registerEvents(new PlayerLeft(), this);
         pluginManager.registerEvents(new UsedItem(), this);

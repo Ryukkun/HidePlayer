@@ -16,6 +16,18 @@ public class HideItemUtil {
         return im.hasDisplayName() ? im.getDisplayName().equals(name) : name.isEmpty();
     }
 
+    public static boolean equalsHideItem(ItemStack is) {
+        return HideItemUtil.equalsItem(is, Material.matchMaterial(Config.getString(Config.PATH.item_hide_id)), Config.getString(Config.PATH.item_hide_name));
+    }
+
+    public static boolean equalsShowItem(ItemStack is) {
+        return HideItemUtil.equalsItem(is, Material.matchMaterial(Config.getString(Config.PATH.item_show_id)), Config.getString(Config.PATH.item_show_name));
+    }
+
+    public static boolean equalsItem(ItemStack is) {
+        return (equalsHideItem(is) || equalsShowItem(is));
+    }
+
 
     public static void toHideItem(PlayerInventory inventory) {
         Material showMaterial = Material.matchMaterial(Config.getString(Config.PATH.item_show_id));
